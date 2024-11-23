@@ -86,7 +86,7 @@ public class Main {
                     WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
                     element.click();
                     Thread.sleep(5000);
-                    wait.withTimeout(Duration.ofSeconds(600));  // Pausa para asegurar la carga de cada sección
+                   // wait.withTimeout(Duration.ofSeconds(600));  // Pausa para asegurar la carga de cada sección
                 }
 
             } catch (Exception e) {
