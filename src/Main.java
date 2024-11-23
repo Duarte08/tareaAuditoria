@@ -53,65 +53,6 @@ public class Main {
         }
     }
     public void testDos() {
-//        try {
-//                // Navegar a Google
-//                driver.navigate().to("https://www.google.com");
-//
-//                // Buscar "mike mike"
-//                WebElement searchbox = driver.findElement(By.name("q"));
-//                searchbox.sendKeys("mike mike");
-//                searchbox.sendKeys(Keys.RETURN);
-//                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(200));
-//
-//                // Hacer clic en el primer resultado
-//                WebElement firstResult = driver.findElement(By.xpath("//*[@id=\"rso\"]/div[1]/div/div/div/div/div/div/div/div[1]/div/span/a/h3"));
-//                firstResult.click();
-//                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-//
-////                // Hacer clic en un botón de búsqueda
-////                WebElement searchButton = driver.findElement(By.xpath("//*[@id=\"lithium-root\"]/main/div[3]/div/div/div[2]/form/div/span/button"));
-////                searchButton.click();
-////                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-//
-//                //Hacer clic en la sección mochilas
-//                WebElement searchMochila = driver.findElement((By.xpath("//*[@id=\"root\"]/div/div/nav/div[2]/ul/li[1]/a/p")));
-//                searchMochila.click();
-//                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3000));
-//
-//                //Hacer clic en la sección bolsos
-//                WebElement searchBolsos = driver.findElement((By.xpath("//*[@id=\"root\"]/div/div/nav/div[2]/ul/li[2]/a/p")));
-//                searchBolsos.click();
-//                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3000));
-//
-//                //Hacer clic en la sección maletines
-//                WebElement searchMaletines = driver.findElement((By.xpath("//*[@id=\"root\"]/div/div/nav/div[2]/ul/li[3]/a/p")));
-//                searchMaletines.click();
-//                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3000));
-//
-//                //Hacer clic en la sección maletas
-//                WebElement searchMaletas = driver.findElement((By.xpath("//*[@id=\"root\"]/div/div/nav/div[2]/ul/li[4]/a/p")));
-//                searchMaletas.click();
-//                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3000));
-//
-//                //Hacer clic en la sección billeteras
-//                WebElement searchBilleteras = driver.findElement((By.xpath("//*[@id=\"root\"]/div/div/nav/div[2]/ul/li[5]/a/p")));
-//                searchBilleteras.click();
-//                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3000));
-//
-//                //Hacer clic en la sección Accesorios
-//                WebElement searchAccesorios = driver.findElement((By.xpath("//*[@id=\"root\"]/div/div/nav/div[2]/ul/li[6]/a/p")));
-//                searchAccesorios.click();
-//                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3000));
-//
-//                //Hacer clic en la sección Outlet
-//                WebElement searchOutlet = driver.findElement((By.xpath("//*[@id=\"root\"]/div/div/nav/div[2]/ul/li[7]/a/p")));
-//                searchOutlet.click();
-//                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3000));
-//
-//        } catch (Exception e) {
-//            System.out.println("Se produjo un error durante la ejecución: " + e.getMessage());
-//        }
-
             try {
                 // Navegar a Google
                 driver.navigate().to("https://www.google.com");
@@ -122,9 +63,13 @@ public class Main {
                 searchbox.sendKeys(Keys.RETURN);
 
                 // Esperar hasta que el primer resultado sea clickeable
-                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2000));
+                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
                 WebElement firstResult = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"rso\"]/div[1]/div/div/div/div/div/div/div/div[1]/div/span/a/h3")));
                 firstResult.click();
+
+                //Clic para cerrar modal
+                WebElement Result = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"onesignal-slidedown-cancel-button\"]")));
+                Result.click();
 
                 // Esperar hasta que las secciones sean clickeables y hacer clic en cada una
                 String[] sectionXPaths = {
@@ -140,7 +85,8 @@ public class Main {
                 for (String xpath : sectionXPaths) {
                     WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
                     element.click();
-                    wait.withTimeout(Duration.ofSeconds(30));  // Pausa para asegurar la carga de cada sección
+                    Thread.sleep(5000);
+                    wait.withTimeout(Duration.ofSeconds(600));  // Pausa para asegurar la carga de cada sección
                 }
 
             } catch (Exception e) {
