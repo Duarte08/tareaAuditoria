@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.swing.plaf.TableHeaderUI;
 import java.time.Duration;
 import java.util.List;
 
@@ -104,13 +105,31 @@ public class Test {
             searchbox.sendKeys("mike mike");
             searchbox.sendKeys(Keys.RETURN);
 
-            // Hacer clic en el primer resultado
-            WebElement firstResult = driver.findElement(By.xpath("//*[@id=\"rso\"]/div[1]/div/div/div/div/div/div/div/div[1]/div/span/a/h3"));
+            // Esperar hasta que el primer resultado sea clickeable
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement firstResult = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"rso\"]/div[1]/div/div/div/div/div/div/div/div[1]/div/span/a/h3")));
             firstResult.click();
 
-            // Hacer clic en un botón de búsqueda
-            WebElement searchButton = driver.findElement(By.xpath("//*[@id=\"lithium-root\"]/main/div[3]/div/div/div[2]/form/div/span/button"));
-            searchButton.click();
+            // Clic para cerrar modal
+            WebElement result = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"onesignal-slidedown-cancel-button\"]")));
+            result.click();
+            Thread.sleep(2000);
+
+            // Clic en pestaña ver más
+            WebElement buttonWatch = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div/div[2]/div[1]/a"));
+            buttonWatch.click();
+            Thread.sleep(2000);
+            // Clic en pestaña lo más nuevo
+            WebElement buttonNew = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@href='/secciones/lo-mas-nuevo']")));
+            buttonNew.click();
+            Thread.sleep(2000);
+            // Clic en pestaña cupones
+            WebElement buttonCup = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"root\"]/div/div/div[2]/ul/li[3]/a[1]")));
+            buttonCup.click();
+            Thread.sleep(2000);
+            // Clic en pestaña Frecuentes
+            WebElement buttonFreq = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"root\"]/div/div/div[2]/ul/li[4]")));
+            buttonFreq.click();
 
         } catch (Exception e) {
             System.out.println("Se produjo un error durante la ejecución: " + e.getMessage());
@@ -121,6 +140,7 @@ public class Test {
 
     public void testCuatro() {
         try {
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             // Navegar a Google
             driver.navigate().to("https://www.google.com");
 
@@ -160,11 +180,11 @@ public class Test {
 
             WebElement closeVentanaDos = driver.findElement(By.cssSelector("body > div:nth-child(7) > div > div > button"));
             closeVentanaDos.click();
-
+                Thread.sleep(3000);
             // Abrir el carrito
             WebElement cartButton = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/nav/div[1]/div/div[1]/div[3]/div[1]/a"));
             cartButton.click();
-
+            Thread.sleep(3000);
             // Esperar a que los ítems en el carrito sean visibles
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div[2]/div/div[1]/div/div[2]/div/div/div")));
             // Paso 2: Validar los ítems en el carrito
@@ -184,6 +204,7 @@ public class Test {
         }
     }
     //Cierra el navegador y finaliza el WebDriver
+
     public void closeWindow() {
         if (driver != null) {
             driver.close();
