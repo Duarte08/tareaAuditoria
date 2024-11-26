@@ -46,6 +46,11 @@ public class Test {
 
         } catch (Exception e) {
             System.out.println("Se produjo un error durante la ejecución: " + e.getMessage());
+        }finally {
+            // Cerrar el navegador al finalizar el test
+            if (driver != null) {
+                driver.quit();
+            }
         }
 
 
@@ -91,6 +96,11 @@ public class Test {
 
         } catch (Exception e) {
             System.out.println("Se produjo un error durante la ejecución: " + e.getMessage());
+        }finally {
+            // Cerrar el navegador al finalizar el test
+            if (driver != null) {
+                driver.quit();
+            }
         }
 
     }
@@ -133,6 +143,11 @@ public class Test {
 
         } catch (Exception e) {
             System.out.println("Se produjo un error durante la ejecución: " + e.getMessage());
+        }finally {
+            // Cerrar el navegador al finalizar el test
+            if (driver != null) {
+                driver.quit();
+            }
         }
 
 
